@@ -24,8 +24,9 @@ display: inline-block ;
   font-size: 1rem;
   border: 1px solid #ccc;
   border-radius: 10px;
+  margin-right: 10px;
 }
-.search-button {
+.category {
   padding: 10px 20px;
   font-size: 1rem;
   border: none;
@@ -57,7 +58,7 @@ display: inline-block ;
   flex: 0 0 200px;
 
   padding: 10px;
-  border: 1px solid #ccc;
+  border: 1px solid #f200ff;
   border-radius: 10px;
   box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
   

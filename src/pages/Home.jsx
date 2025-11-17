@@ -4,8 +4,10 @@ import ProductsList from "./ProductsList";
 export default function Home() {
   const [products, setProducts] = useState(mockProducts);
   const [search, setSearch] = useState("");
+  const [category, setCategorie] = useState("all");
   const filtered = products.filter(p =>
-  p.title.toLowerCase().includes(search.toLowerCase())
+  p.title.toLowerCase().includes(search.toLowerCase()) &&
+  (category === "all" || p.category === category)
   );
   return (
   <>
@@ -14,7 +16,13 @@ export default function Home() {
   <h2 className="subtitle">Browse items for sale from students at your university</h2>
   <div className="search-container">
   <input type="text" placeholder="Search for items" className="search-input" value={search} onChange={(e) => setSearch(e.target.value)} />
-  <button className="search-button">Search</button>
+  <select name="category" className='category' value={category} onChange={(e) => setCategorie(e.target.value)}>
+    <option value="all">All</option>
+    <option value="electronics">Electronics</option>
+    <option value="books">Books</option>
+    <option value="furniture">Furniture</option>
+    <option value="tools">Tools</option>
+  </select>
   </div>
   </div>
   <div >
