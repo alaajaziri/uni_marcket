@@ -1,0 +1,19 @@
+.navbar { 
+  left: 50%;
+  
+  display: flex;
+  justify-content: right;
+  align-items: center;
+  gap: 2rem;
+  
+  ;
+}
+
+
+
+header {
+  border-bottom: 1px solid #666565;
+  padding-top: 1rem;
+  padding-bottom: 1rem;
+
+}
