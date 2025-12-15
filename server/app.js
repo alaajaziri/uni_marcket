@@ -3,9 +3,16 @@ var logger = require('morgan');
 
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
+var mongoose = require("mongoose");
+
+mongoose.connect("mongodb+srv://alaajaziri1122_db_user:OSDmbpNNTDyL2PgI@cluster0.nzxgohz.mongodb.net/?appName=uni_market")
+  .then(() => console.log("MongoDB connected"))
+  .catch((err) => console.log(err));
 
 
 var app = express();
+const cors = require("cors");
+app.use(cors());
 
 
 app.use(logger('dev'));
@@ -15,9 +22,10 @@ app.use(express.urlencoded({ extended: false }));
 
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
+app.use('/products', require('./routes/products'));
 
 // catch 404 and forward to error handler
-app.use(function(req, res, next) {
+app.use(function (req, res, next) {
   next(createError(404));
 });
 
@@ -26,11 +34,11 @@ app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
 });
 // error handler
-app.use(function(err, req, res, next) {
+app.use(function (err, req, res, next) {
   // render the error page
   res.status(err.status || 500);
   res.json({
-  error: err.message,
+    error: err.message,
   });
 });
 

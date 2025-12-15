@@ -6,16 +6,23 @@ import Navbar from "./components/Navbar";
 import Home from "./pages/Home";
 import AddListing from "./pages/AddListing";
 import ProductDetails from "./pages/ProductDetails";
+import Signup from "./pages/Signup";
+import RouteGuard from "./components/RouteGuard";
+import Login from "./pages/Login";
+
 function App() {
   return (
     <>
-      <header>  
+      <header>
         <Navbar />
       </header>
       <Routes >
-        <Route path="/" element={<Home />} />
-        <Route path="/add" element={<AddListing />} />
-        <Route path="/product/:id" element={<ProductDetails />} />
+        <Route path="/" element={
+          <RouteGuard><Home /></RouteGuard>} />
+        <Route path="/add" element={<RouteGuard><AddListing /></RouteGuard>} />
+        <Route path="/product/:id" element={<RouteGuard><ProductDetails /></RouteGuard>} />
+        <Route path="/signup" element={<Signup />} />
+        <Route path="/login" element={<Login />} />
       </Routes>
 
     </>
