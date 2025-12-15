@@ -1,10 +1,11 @@
 import { useState } from "react";
 import api from "../api/api";
+import { supabase } from "../supabase.js";
 
 export default function AddListing() {
   const [title, setTitle] = useState("");
   const [price, setPrice] = useState(0);
-  const [imageURL, setImageUrl] = useState("");
+  const [imageFile, setImageFile] = useState(null);
   const [description, setDescription] = useState("");
   const [category, setCategory] = useState("");
   const [condition, setCondition] = useState("");
@@ -15,31 +16,64 @@ export default function AddListing() {
   const [sellerUniversity, setSellerUniversity] = useState("");
   const [sellerContact, setSellerContact] = useState("");
 
-  function handleAdd(e) {
-    e.preventDefault(); // prevents form reload
+  const uploadImage = async (file) => {
+    if (!file) {
+      throw new Error("No file provided");
+    }
 
-    const newProd = {
-      title: title,
-      price: price,
-      images: [imageURL],
-      description: description,
-      category: category,
-      condition: condition,
-      quantity: quantity,
-      isSold: false,
-      seller: {
-        name: sellerName,
-        university: sellerUniversity,
-        contact: sellerContact,
-      },
-      location: location,
-      tags: tags.split(','),
-      rating: 0,
-      postedAt: new Date(),
-    };
-    api.post('/products', newProd)
-      .then(res => res.data)
-      .catch(err => console.error("FETCH ERROR:", err));
+    if (!file.name) {
+      throw new Error("File has no name");
+    }
+
+    const fileName = `${Date.now()}_${file.name}`;
+
+    const { error } = await supabase.storage
+      .from("products")
+      .upload(fileName, file);
+
+    if (error) throw error;
+
+    const { data } = supabase.storage
+      .from("products")
+      .getPublicUrl(fileName);
+
+    return data.publicUrl;
+  };
+
+  async function handleAdd(e) {
+
+    e.preventDefault(); // prevents form reload
+    try {
+
+
+      const image = await uploadImage(imageFile);
+      console.log("IMAGE:", image);
+      const newProd = {
+        title: title,
+        price: price,
+        images: [image],
+        description: description,
+        category: category,
+        condition: condition,
+        quantity: quantity,
+        isSold: false,
+        seller: {
+          name: sellerName,
+          university: sellerUniversity,
+          contact: sellerContact,
+        },
+        location: location,
+        tags: tags.split(','),
+        rating: 0,
+        postedAt: new Date(),
+      };
+
+      api.post('/products', newProd)
+        .then(res => res.data)
+        .catch(err => console.error("FETCH ERROR:", err));
+    } catch (error) {
+      console.error("UPLOAD ERROR:", error);
+    }
   }
 
   return (
@@ -55,8 +89,8 @@ export default function AddListing() {
         <input type="number" value={price} onChange={(e) => setPrice(e.target.value)} />
         <br />
 
-        <span style={{ fontSize: 25, color: "violet" }}>imageURL:</span>
-        <input type="text" value={imageURL} onChange={(e) => setImageUrl(e.target.value)} />
+        <span style={{ fontSize: 25, color: "violet" }}>image:</span>
+        <input type="file" accept="image/*" onChange={(e) => setImageFile(e.target.files[0])} />
         <br />
         <span style={{ fontSize: 25, color: "violet" }}>description:</span>
         <input type="text" value={description} onChange={(e) => setDescription(e.target.value)} />

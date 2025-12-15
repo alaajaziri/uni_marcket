@@ -5,19 +5,19 @@ const productSchema = new mongoose.Schema({
   price: Number,
   images: [String],
   description: String,
-  category:String,
-  condition:String,
-  quantity:Number,
-  isSold:Boolean,
+  category: String,
+  condition: String,
+  quantity: Number,
+  isSold: Boolean,
   seller: {
-    name:String,
-    university:String,
-    contact:String
+    name: String,
+    university: String,
+    contact: String
   },
-  location:String,
-  tags:[String],
-  rating:Number,
-  postedAt:Date
+  location: String,
+  tags: [String],
+  rating: Number,
+  postedAt: Date
 });
 
 module.exports = mongoose.model("Product", productSchema);
