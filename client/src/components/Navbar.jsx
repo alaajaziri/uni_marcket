@@ -7,6 +7,7 @@ export default function Navbar() {
       <Link style={{ color: "#ffffffff", backgroundColor: "#cc00ff80", borderRadius: "5px", padding: "0.5rem 1rem" }} to="/add">Add Listing</Link>
       <Link style={{ color: "#ffffffff", backgroundColor: "#cc00ff80", borderRadius: "5px", padding: "0.5rem 1rem" }} to="/signup">Signup</Link>
       <Link style={{ color: "#ffffffff", backgroundColor: "#cc00ff80", borderRadius: "5px", padding: "0.5rem 1rem" }} to="/login">Login</Link>
+      <Link style={{ color: "#ffffffff", backgroundColor: "#cc00ff80", borderRadius: "5px", padding: "0.5rem 1rem" }} to="/profile">Profile</Link>
     </nav>
   );
 }

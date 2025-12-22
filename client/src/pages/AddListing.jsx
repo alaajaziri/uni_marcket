@@ -10,6 +10,9 @@ export default function AddListing() {
   const [description, setDescription] = useState("");
   const [category, setCategory] = useState("");
   const [location, setLocation] = useState("");
+  const [sName, setSName] = useState("");
+  const [sUni, setSUni] = useState("");
+  const [sContact, setSContact] = useState("");
 
   const uploadImage = async (file) => {
     if (!file) {

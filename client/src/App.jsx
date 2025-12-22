@@ -9,6 +9,7 @@ import ProductDetails from "./pages/ProductDetails";
 import Signup from "./pages/Signup";
 import RouteGuard from "./components/RouteGuard";
 import Login from "./pages/Login";
+import ProfileContent from "./pages/Profile";
 
 function App() {
   return (
@@ -21,6 +22,7 @@ function App() {
           <RouteGuard><Home /></RouteGuard>} />
         <Route path="/add" element={<RouteGuard><AddListing /></RouteGuard>} />
         <Route path="/product/:id" element={<RouteGuard><ProductDetails /></RouteGuard>} />
+        <Route path="/profile" element={<RouteGuard><ProfileContent /></RouteGuard>} />
         <Route path="/signup" element={<Signup />} />
         <Route path="/login" element={<Login />} />
       </Routes>
