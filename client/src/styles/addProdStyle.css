@@ -1,0 +1,60 @@
+.add-listing-form {
+    max-width: 500px;
+    margin: 40px auto;
+    padding: 25px;
+    background: #1e1e2f;
+    border-radius: 12px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+    color: white;
+    font-family: Arial, sans-serif;
+}
+
+.add-listing-form h1 {
+    text-align: center;
+    margin-bottom: 25px;
+    color: violet;
+}
+
+.add-listing-form span {
+    display: block;
+    margin-top: 15px;
+    margin-bottom: 5px;
+    font-size: 16px;
+}
+
+.add-listing-form input {
+    width: 100%;
+    padding: 10px;
+    border-radius: 8px;
+    border: none;
+    outline: none;
+    font-size: 15px;
+}
+
+.add-listing-form input[type="file"] {
+    background: #2a2a40;
+    color: #ccc;
+}
+
+.add-listing-form input:focus {
+    box-shadow: 0 0 0 2px violet;
+}
+
+.add-listing-form button {
+    width: 100%;
+    margin-top: 25px;
+    padding: 12px;
+    border: none;
+    border-radius: 10px;
+    background: linear-gradient(135deg, violet, #7f00ff);
+    color: white;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: transform 0.2s ease, opacity 0.2s ease;
+}
+
+.add-listing-form button:hover {
+    transform: translateY(-2px);
+    opacity: 0.9;
+}
