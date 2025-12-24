@@ -6,6 +6,7 @@ require("./firebase");
 var indexRouter = require('./routes/index');
 var productsRouter = require('./routes/products');
 var profileRouter = require('./routes/profile');
+var usersRouter = require('./routes/user');
 var mongoose = require("mongoose");
 
 mongoose.connect("mongodb+srv://alaajaziri1122_db_user:OSDmbpNNTDyL2PgI@cluster0.nzxgohz.mongodb.net/?appName=uni_market")
@@ -26,6 +27,7 @@ app.use(express.urlencoded({ extended: false }));
 app.use('/', indexRouter);
 app.use('/products', productsRouter);
 app.use('/profile', profileRouter)
+app.use('/users', usersRouter)
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
   next(createError(404));

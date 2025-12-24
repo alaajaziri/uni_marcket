@@ -1,5 +1,6 @@
 import { createUserWithEmailAndPassword } from "firebase/auth";
 import { auth } from "../firebase";
+import api from "../api/api";
 import { useState } from "react";
 
 export default function Signup() {
@@ -10,8 +11,17 @@ export default function Signup() {
     const [contact, setContact] = useState("");
     async function handleSignup(e) {
         e.preventDefault();
+
         const user = await createUserWithEmailAndPassword(auth, email, password);
         console.log(user.user.uid);
+        api.post("/users", {
+            uid: user.user.uid,
+            seller: {
+                name,
+                university,
+                contact
+            }
+        });
     }
     return (
         <div>

@@ -2,7 +2,7 @@ import { useState } from "react";
 import api from "../api/api";
 import { supabase } from "../supabase.js";
 import "../styles/addProdStyle.css";
-
+import { auth } from "../firebase";
 export default function AddListing() {
   const [title, setTitle] = useState("");
   const [price, setPrice] = useState(0);
@@ -56,8 +56,8 @@ export default function AddListing() {
         isSold: false,
         postedAt: new Date(),
       };
-
-      api.post('/products', newProd)
+      const token = await user.getIdToken();
+      api.post('/products', { ...newProd, token })
         .then(res => res.data)
         .catch(err => console.error("FETCH ERROR:", err));
     } catch (error) {
