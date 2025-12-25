@@ -2,10 +2,12 @@ import { useEffect, useState } from "react";
 import { auth } from "../firebase";
 import { onAuthStateChanged } from "firebase/auth";
 import api from "../api/api";
+import ProductsList from "./ProductsList";
 
 export default function ProfileContent() {
     const [data, setData] = useState(null);
     const [loading, setLoading] = useState(true);
+    const [user, setUser] = useState(null);
 
     useEffect(() => {
         const unsubscribe = onAuthStateChanged(auth, async (user) => {
@@ -24,6 +26,8 @@ export default function ProfileContent() {
             })
                 .then(res => {
                     setData(res.data);
+                    setUser(res.data.user);
+                    console.log(res.data);
                     setLoading(false);
                 })
                 .catch(err => {
@@ -45,13 +49,7 @@ export default function ProfileContent() {
             <p>Contact: {data.user.contact}</p>
 
             <h2>My Products</h2>
-            <ul>
-                {data.products.map((p) => (
-                    <li key={p._id}>
-                        {p.title} - ${p.price}
-                    </li>
-                ))}
-            </ul>
+            <ProductsList products={data.products} />
         </div>
     );
 }

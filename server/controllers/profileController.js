@@ -8,14 +8,14 @@ async function getUserProducts(req, res, next) {
 
         const user = await User.findOne({ uid });
         if (!user) return res.status(404).json({ message: "User not found" });
-
-        const products = await Product.find({ sellerUid: uid });
+        console.log("user", user);
+        const products = await Product.find({ userId: user._id });
         console.log("ps", products);
         res.json({
             user: {
-                name: user.name,
-                university: user.university,
-                contact: user.contact
+                name: user.seller.name,
+                university: user.seller.university,
+                contact: user.seller.contact
             },
             products
         });

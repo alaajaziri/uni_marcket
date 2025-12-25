@@ -1,22 +1,7 @@
 const Product = require("../models/product");
 const User = require("../models/user");
 
-async function getUserProducts(req, res, next) {
-  try {
-    const firebaseUid = req.user.uid;
 
-    // Get user info
-    const user = await User.findOne({ firebaseUid });
-    if (!user) return res.status(404).json({ message: "User not found" });
-
-    // Get products linked to this user
-    const products = await Product.find({ userId: user._id });
-
-    res.json({ user: user.seller, products });
-  } catch (err) {
-    next(err);
-  }
-}
 
 async function getAllProducts(req, res, next) {
   try {
@@ -27,29 +12,47 @@ async function getAllProducts(req, res, next) {
   }
 };
 
-async function addProduct(req, res, next) {
+async function addProduct(req, res) {
   try {
-    const firebaseUid = req.user.uid;
-    const user = await User.findOne({ firebaseUid });
-    if (!user) return res.status(404).json({ message: "User not found" });
+    if (!req.user) {
+      return res.status(401).json({ message: "Unauthorized" });
+    }
 
-    const newProd = req.body;
-    const product = new Product({ ...newProd, userId: user._id });
+    const user = req.user;
+
+    const product = new Product({
+      ...req.body,
+      userId: user._id,
+    });
+
     await product.save();
-    res.json(product);
+    res.status(201).json(product);
   } catch (err) {
-    next(err);
+    console.error("ADD PRODUCT ERROR:", err);
+    res.status(500).json({ message: err.message });
   }
-};
+}
 
 async function getProductById(req, res, next) {
   try {
     const id = req.params.id;
-    const product = await Product.findById(id);
+    const product = await Product.findById(id).populate("userId");
     if (!product) {
       return res.status(404).json({ message: "Product not found" });
     }
-    res.json(product);
+
+    // Create a response object with fresh seller info from the user
+    const productResponse = product.toObject();
+
+    if (product.userId && product.userId.seller) {
+      productResponse.seller = {
+        name: product.userId.seller.name,
+        university: product.userId.seller.university,
+        contact: product.userId.seller.contact
+      };
+    }
+
+    res.json(productResponse);
   } catch (err) {
     next(err);
   }
@@ -65,4 +68,4 @@ async function deleteProduct(req, res, next) {
   }
 }
 
-module.exports = { getAllProducts, addProduct, getProductById, deleteProduct, getUserProducts };
+module.exports = { getAllProducts, addProduct, getProductById, deleteProduct };

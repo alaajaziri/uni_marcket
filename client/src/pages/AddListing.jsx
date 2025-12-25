@@ -2,8 +2,10 @@ import { useState } from "react";
 import api from "../api/api";
 import { supabase } from "../supabase.js";
 import "../styles/addProdStyle.css";
-import { auth } from "../firebase";
+import { getAuth } from "firebase/auth";
 export default function AddListing() {
+  const auth = getAuth();
+  const user = auth.currentUser;
   const [title, setTitle] = useState("");
   const [price, setPrice] = useState(0);
   const [imageFile, setImageFile] = useState(null);
@@ -57,7 +59,16 @@ export default function AddListing() {
         postedAt: new Date(),
       };
       const token = await user.getIdToken();
-      api.post('/products', { ...newProd, token })
+
+      await api.post(
+        '/api/products',
+        newProd,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      )
         .then(res => res.data)
         .catch(err => console.error("FETCH ERROR:", err));
     } catch (error) {

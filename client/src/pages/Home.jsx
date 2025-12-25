@@ -4,7 +4,7 @@ import api from "../api/api";
 export default function Home() {
   const [products, setProducts] = useState([]);
   useEffect(() => {
-    api.get('/products')
+    api.get('/api/products')
       .then(res => setProducts(res.data))
       .catch(err => console.error("FETCH ERROR:", err));
   }, []);

@@ -8,7 +8,13 @@ export default function ProductDetails() {
   const [product, setProduct] = useState({});
 
   useEffect(() => {
-    api.get(`/products/${id}`)
+    api.get(`/api/products/${id}`,
+      {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+      }
+    )
       .then((res) => setProduct(res.data))
       .catch((err) => console.error("FETCH ERROR:", err));
   }, [id]);
@@ -32,6 +38,7 @@ export default function ProductDetails() {
 
       <div className="seller-section">
         <h2 className="seller-title">👤 Seller Info</h2>
+        <p><span className="info-label">👤 Name:</span> {product.seller.name}</p>
         <p><span className="info-label">🎓 University:</span> {product.seller.university}</p>
         <p><span className="info-label">📞 Contact:</span> {product.seller.contact}</p>
 

@@ -25,7 +25,7 @@ app.use(express.urlencoded({ extended: false }));
 
 
 app.use('/', indexRouter);
-app.use('/products', productsRouter);
+app.use('/api/products', productsRouter);
 app.use('/profile', profileRouter)
 app.use('/users', usersRouter)
 // catch 404 and forward to error handler

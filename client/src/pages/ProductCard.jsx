@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 import api from "../api/api";
 export default function ProductCard({ product }) {
   const deleteProduct = (id) => {
-    api.delete(`/products/${id}`)
+    api.delete(`/api/products/${id}`)
       .then(() => {
         window.location.reload();
       })
