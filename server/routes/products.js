@@ -7,8 +7,9 @@ var { getAllProducts, addProduct, getProductById, deleteProduct } = require('../
 router.get('/', getAllProducts);
 
 router.post('/', requireAuth, addProduct);
-router.get('/:id', getProductById);
 router.delete('/:id', requireAuth, deleteProduct);
+router.get('/:id', getProductById);
+
 
 
 module.exports = router;

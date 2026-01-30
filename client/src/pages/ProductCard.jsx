@@ -1,14 +1,34 @@
 import { Link } from "react-router-dom";
 import api from "../api/api";
+import { auth } from "../firebase";
+
 export default function ProductCard({ product }) {
-  const deleteProduct = (id) => {
-    api.delete(`/api/products/${id}`)
-      .then(() => {
-        window.location.reload();
-      })
-      .catch((err) => {
-        console.error(err);
-      });
+  const deleteProduct = async (id) => {
+    try {
+      const user = auth.currentUser;
+      if (!user) {
+        console.error("User not authenticated");
+        alert("You must be logged in to delete a product.");
+        return;
+      }
+
+      const token = await user.getIdToken();
+
+      api.delete(`/api/products/${id}`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        })
+        .then(() => {
+          window.location.reload();
+        })
+        .catch((err) => {
+          console.error(err);
+        });
+    } catch (error) {
+      console.error("Error getting token:", error);
+    }
   };
   return (
     <div className="product-card">

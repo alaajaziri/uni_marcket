@@ -15,6 +15,7 @@ async function getAllProducts(req, res, next) {
 async function addProduct(req, res) {
   try {
     if (!req.user) {
+      console.log("[DEBUG] req.user is NULL or Undefined");
       return res.status(401).json({ message: "Unauthorized" });
     }
 
@@ -64,7 +65,8 @@ async function deleteProduct(req, res, next) {
     const product = await Product.findByIdAndDelete(id);
     res.json(product);
   } catch (err) {
-    next(err);
+    console.error("DELETE PRODUCT ERROR:", err);
+    res.status(500).json({ message: err.message });
   }
 }
 

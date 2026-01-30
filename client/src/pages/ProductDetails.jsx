@@ -19,7 +19,7 @@ export default function ProductDetails() {
       .catch((err) => console.error("FETCH ERROR:", err));
   }, [id]);
 
-  if (!product.seller) return <p className="loading-text">⏳ Loading product...</p>;
+  if (!product._id) return <p className="loading-text">⏳ Loading product...</p>;
 
   return (
     <div className="product-container">
@@ -38,11 +38,17 @@ export default function ProductDetails() {
 
       <div className="seller-section">
         <h2 className="seller-title">👤 Seller Info</h2>
-        <p><span className="info-label">👤 Name:</span> {product.seller.name}</p>
-        <p><span className="info-label">🎓 University:</span> {product.seller.university}</p>
-        <p><span className="info-label">📞 Contact:</span> {product.seller.contact}</p>
+        {product.seller ? (
+          <>
+            <p><span className="info-label">👤 Name:</span> {product.seller.name}</p>
+            <p><span className="info-label">🎓 University:</span> {product.seller.university}</p>
+            <p><span className="info-label">📞 Contact:</span> {product.seller.contact}</p>
 
-        <a href={`tel:${product.seller.contact}`} className="contact-btn">📩 Call Seller</a>
+            <a href={`tel:${product.seller.contact}`} className="contact-btn">📩 Call Seller</a>
+          </>
+        ) : (
+          <p>Seller info not available</p>
+        )}
       </div>
     </div>
   );

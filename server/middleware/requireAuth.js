@@ -18,8 +18,9 @@ const syncUser = async (req, res, next) => {
         if (!user) {
             user = await User.create({
                 uid: decoded.uid,
-                name: decoded.name || "",
-                email: decoded.email || "",
+                seller: {
+                    name: decoded.name || "",
+                }
             });
         }
 
