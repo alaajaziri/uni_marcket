@@ -9,6 +9,7 @@ export default function Login() {
         e.preventDefault();
         const loggedUser = await signInWithEmailAndPassword(auth, email, password);
         console.log("Logged in:", loggedUser.user.uid);
+        window.location.href = "/";
     }
     return (
         <div>

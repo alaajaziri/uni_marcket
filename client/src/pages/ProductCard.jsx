@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 import api from "../api/api";
 import { auth } from "../firebase";
 
-export default function ProductCard({ product }) {
+export default function ProductCard({ product, origin }) {
   const deleteProduct = async (id) => {
     try {
       const user = auth.currentUser;
@@ -36,7 +36,9 @@ export default function ProductCard({ product }) {
       <h3>{product.title}</h3>
       <p>{product.price} DT</p>
       <Link style={{ color: "#ffffffff", fontWeight: "bold", backgroundColor: "#cc00ff80", borderRadius: "5px", padding: "0.5rem 1rem" }} to={`/product/${product._id}`}>Details</Link>
-      <button style={{ color: "#ffffffff", fontWeight: "bold", fontSize: "1rem", backgroundColor: "#cc00ff80", borderRadius: "5px", padding: "0.6rem 1.2rem ", marginLeft: "1rem", border: "none", cursor: "pointer" }} onClick={() => deleteProduct(product._id)}>Delete</button>
+      {origin === "profile" && (
+        <button style={{ color: "#ffffffff", fontWeight: "bold", fontSize: "1rem", backgroundColor: "#cc00ff80", borderRadius: "5px", padding: "0.6rem 1.2rem ", marginLeft: "1rem", border: "none", cursor: "pointer" }} onClick={() => deleteProduct(product._id)}>Delete</button>
+      )}
 
     </div>
   );

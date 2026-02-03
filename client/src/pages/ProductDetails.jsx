@@ -7,6 +7,7 @@ export default function ProductDetails() {
   const { id } = useParams();
   const [product, setProduct] = useState({});
 
+
   useEffect(() => {
     api.get(`/api/products/${id}`,
       {

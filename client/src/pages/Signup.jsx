@@ -22,6 +22,7 @@ export default function Signup() {
                 contact
             }
         });
+        window.location.href = "/";
     }
     return (
         <div>

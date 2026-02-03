@@ -1,13 +1,33 @@
 import { Link } from "react-router-dom";
+import { auth } from "../firebase";
+import { onAuthStateChanged } from "firebase/auth";
+import { useEffect, useState } from "react";
 
 export default function Navbar() {
+  const [user, setUser] = useState(null);
+
+  useEffect(() => {
+    const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
+      setUser(currentUser);
+    });
+
+    return () => unsubscribe();
+  }, []);
+
   return (
     <nav className="navbar">
-      <Link style={{ color: "#ffffffff", backgroundColor: "#cc00ff80", borderRadius: "5px", padding: "0.5rem 1rem" }} to="/">Home</Link>
-      <Link style={{ color: "#ffffffff", backgroundColor: "#cc00ff80", borderRadius: "5px", padding: "0.5rem 1rem" }} to="/add">Add Listing</Link>
-      <Link style={{ color: "#ffffffff", backgroundColor: "#cc00ff80", borderRadius: "5px", padding: "0.5rem 1rem" }} to="/signup">Signup</Link>
-      <Link style={{ color: "#ffffffff", backgroundColor: "#cc00ff80", borderRadius: "5px", padding: "0.5rem 1rem" }} to="/login">Login</Link>
-      <Link style={{ color: "#ffffffff", backgroundColor: "#cc00ff80", borderRadius: "5px", padding: "0.5rem 1rem" }} to="/profile">Profile</Link>
+      <Link to="/">Home</Link>
+      <Link to="/add">Add Listing</Link>
+
+      {user && (
+        <Link to="/profile">Profile</Link>
+      )}
+      {!user && (
+        <>
+          <Link to="/signup">Signup</Link>
+          <Link to="/login">Login</Link>
+        </>
+      )}
     </nav>
   );
 }

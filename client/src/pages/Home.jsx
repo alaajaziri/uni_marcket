@@ -14,6 +14,7 @@ export default function Home() {
     p.title.toLowerCase().includes(search.toLowerCase()) &&
     (category === "all" || p.category === category)
   );
+
   return (
     <>
       <div className="header">

@@ -6,13 +6,15 @@ import ProductsList from "./ProductsList";
 
 export default function ProfileContent() {
     const [data, setData] = useState(null);
+
     const [loading, setLoading] = useState(true);
     const [user, setUser] = useState(null);
+
 
     useEffect(() => {
         const unsubscribe = onAuthStateChanged(auth, async (user) => {
             if (!user) {
-                // not logged in → redirect or handle
+
                 window.location.href = "/login";
                 return;
             }
@@ -26,8 +28,7 @@ export default function ProfileContent() {
             })
                 .then(res => {
                     setData(res.data);
-                    setUser(res.data.user);
-                    console.log(res.data);
+
                     setLoading(false);
                 })
                 .catch(err => {
@@ -47,9 +48,8 @@ export default function ProfileContent() {
             <p>Name: {data.user.name}</p>
             <p>University: {data.user.university}</p>
             <p>Contact: {data.user.contact}</p>
-
             <h2>My Products</h2>
-            <ProductsList products={data.products} />
+            <ProductsList products={data.products} origin="profile" />
         </div>
     );
 }

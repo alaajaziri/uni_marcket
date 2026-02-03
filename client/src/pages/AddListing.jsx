@@ -1,11 +1,12 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import api from "../api/api";
 import { supabase } from "../supabase.js";
+import { onAuthStateChanged } from "firebase/auth";
 import "../styles/addProdStyle.css";
 import { getAuth } from "firebase/auth";
 export default function AddListing() {
+  const [user, setUser] = useState(null);
   const auth = getAuth();
-  const user = auth.currentUser;
   const [title, setTitle] = useState("");
   const [price, setPrice] = useState(0);
   const [imageFile, setImageFile] = useState(null);
@@ -15,7 +16,47 @@ export default function AddListing() {
   const [sName, setSName] = useState("");
   const [sUni, setSUni] = useState("");
   const [sContact, setSContact] = useState("");
+  const [data, setData] = useState(null);
 
+  const [loading, setLoading] = useState(true);
+
+
+
+
+  useEffect(() => {
+    const unsubscribe = onAuthStateChanged(auth, async (currentUser) => {
+      if (!currentUser) {
+        window.location.href = "/login";
+        return;
+      }
+
+      setUser(currentUser);
+
+      try {
+        const token = await currentUser.getIdToken();
+
+        const res = await api.get("/profile", {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
+
+        const seller = res.data.user;
+        console.log(seller);
+        setSName(seller.name);
+        setSUni(seller.university);
+        setSContact(seller.contact);
+
+        setData(res.data);
+        setLoading(false);
+      } catch (err) {
+        console.error("FETCH ERROR:", err);
+        setLoading(false);
+      }
+    });
+
+    return () => unsubscribe();
+  }, []);
   const uploadImage = async (file) => {
     if (!file) {
       throw new Error("No file provided");
@@ -55,6 +96,11 @@ export default function AddListing() {
         description: description,
         category: category,
         location: location,
+        seller: {
+          name: sName,
+          university: sUni,
+          contact: sContact,
+        },
         isSold: false,
         postedAt: new Date(),
       };
@@ -71,6 +117,7 @@ export default function AddListing() {
       )
         .then(res => res.data)
         .catch(err => console.error("FETCH ERROR:", err));
+      window.location.href = "/";
     } catch (error) {
       console.error("UPLOAD ERROR:", error);
     }
