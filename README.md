@@ -5,10 +5,16 @@
 This project was developed as a portfolio project to showcase full-stack development skills using modern web technologies.
 
 ## Screenshots
-
+**Home Page**
 ![Home Page](screenshots/home.png)
+
+**Add Listing**
 ![Add Listing](screenshots/add-listing.png)
+
+**Auth page**
 ![Auth page](screenshots/auth.png)
+
+**Product details**
 ![product details](screenshots/product.png)
 
 These screenshots highlight the main user flow of the application, including browsing listings and creating a new product post.
