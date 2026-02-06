@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import './App.css'
-import './styles/main.css'
+// import './styles/main.css' // Deprecated
 import { Routes, Route } from "react-router-dom";
 import Navbar from "./components/Navbar";
 import Home from "./pages/Home";
@@ -14,19 +14,17 @@ import ProfileContent from "./pages/Profile";
 function App() {
   return (
     <>
-      <header>
-        <Navbar />
-      </header>
-      <Routes >
-        <Route path="/" element={
-          <RouteGuard><Home /></RouteGuard>} />
-        <Route path="/add" element={<RouteGuard><AddListing /></RouteGuard>} />
-        <Route path="/product/:id" element={<RouteGuard><ProductDetails /></RouteGuard>} />
-        <Route path="/profile" element={<RouteGuard><ProfileContent /></RouteGuard>} />
-        <Route path="/signup" element={<Signup />} />
-        <Route path="/login" element={<Login />} />
-      </Routes>
-
+      <Navbar />
+      <main className="main-content">
+        <Routes>
+          <Route path="/" element={<RouteGuard><Home /></RouteGuard>} />
+          <Route path="/add" element={<RouteGuard><AddListing /></RouteGuard>} />
+          <Route path="/product/:id" element={<RouteGuard><ProductDetails /></RouteGuard>} />
+          <Route path="/profile" element={<RouteGuard><ProfileContent /></RouteGuard>} />
+          <Route path="/signup" element={<Signup />} />
+          <Route path="/login" element={<Login />} />
+        </Routes>
+      </main>
     </>
   )
 }

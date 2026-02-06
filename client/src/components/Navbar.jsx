@@ -16,18 +16,22 @@ export default function Navbar() {
 
   return (
     <nav className="navbar">
-      <Link to="/">Home</Link>
-      <Link to="/add">Add Listing</Link>
+      <div className="navbar-brand">
+        <Link to="/" style={{ color: 'inherit' }}>UniMarket</Link>
+      </div>
+      <div className="navbar-links">
+        <Link to="/" className="nav-link">Home</Link>
+        <Link to="/add" className="nav-link">Sell Item</Link>
 
-      {user && (
-        <Link to="/profile">Profile</Link>
-      )}
-      {!user && (
-        <>
-          <Link to="/signup">Signup</Link>
-          <Link to="/login">Login</Link>
-        </>
-      )}
+        {user ? (
+          <Link to="/profile" className="nav-link">Profile</Link>
+        ) : (
+          <>
+            <Link to="/login" className="nav-link">Login</Link>
+            <Link to="/signup" className="nav-link btn btn-primary">Sign Up</Link>
+          </>
+        )}
+      </div>
     </nav>
   );
 }
