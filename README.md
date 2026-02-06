@@ -6,7 +6,7 @@ This project was developed as a portfolio project to showcase full-stack develop
 
 ## Screenshots
 ## Home Page
-![Home Page](screenshots/home.png)
+![Home Page](screenshots/home.gif)
 
 ## Add Listing
 ![Add Listing](screenshots/add-listing.png)
