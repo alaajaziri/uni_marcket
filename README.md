@@ -102,14 +102,24 @@ http://localhost:3000
 
 ```
 uni_marcket/
-├── src/
-│   ├── components/   # Reusable UI components
-│   ├── pages/        # Application pages (routes)
-│   ├── utils/        # Helper functions and configs
-│   └── api/          # API and service logic
-├── public/
-├── tests/
-├── package.json
+├── client/
+│   ├── public/
+│   ├── src/
+│   │   ├── api/          # API and service logic
+│   │   ├── assets/       # Static assets
+│   │   ├── components/   # Reusable UI components
+│   │   ├── pages/        # Application pages (routes)
+│   │   ├── styles/       # Global styles
+│   │   └── App.jsx       # Main application component
+│   ├── package.json
+│   └── vite.config.js
+├── server/
+│   ├── controllers/  # Request handlers
+│   ├── middleware/   # Custom middleware
+│   ├── models/       # Data models
+│   ├── routes/       # API routes
+│   ├── app.js        # Server entry point
+│   └── package.json
 └── README.md
 ```
 
